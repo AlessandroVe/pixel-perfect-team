@@ -1,0 +1,9 @@
+{
+    "LOGIN":{
+        "loginTitle": "Area Privata",
+        "forgotUser": "Hai dimenticato",
+        "loginButtonText": "Accedi",
+        "createAccount": "Crea il tuo account"
+    }
+    
+}

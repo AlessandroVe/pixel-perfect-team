@@ -1,0 +1,99 @@
+.login-container{
+    background-color: #fff;
+    width: 960px;
+    border-radius: 10px;
+    padding: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.login-left{
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-right{
+    flex: 1;
+    padding-top: 150px
+}
+
+
+
+.login-right-container{
+    max-width: 290px;
+    margin: 0 auto;
+
+}
+
+.login-title{
+    font-family: 'Montserrat';
+    color: #2b2b2b;
+    font-size: 24px;
+}
+
+.login-text{
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #999999;
+    margin-top: 5%;
+}
+
+.login-link{
+    font-family: 'Poppins', sans-serif;
+    color: #666666;
+    transition: 0.3s;
+}
+
+.login-footer {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-top: 30%;
+}
+
+.login-link:hover{
+    cursor: pointer;
+    transition: 0.3s;
+    color: #57b846
+}
+
+.image-wrapper{
+    perspective: 400px;
+    transform: scale(1);
+    transition: 0.1s;
+}
+
+.image-wrapper:hover{
+    transform: scale(1.1);
+
+}
+
+.image{
+    z-index: 9 !important;
+    transform: rotateX(0deg) rotateY(0);
+    transition: 0.2s ease;
+}
+
+
+@media only screen and (max-width: 600px) {
+    /* MOBILE */
+    .login-container{
+        margin: 15px !important;
+        padding: 15px;
+    }
+
+    .login-left{
+        display: none;
+    }
+
+    .login-right{
+        flex: 1;
+        padding-top: 50px
+    }
+    
+
+}

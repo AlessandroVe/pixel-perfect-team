@@ -1,0 +1,22 @@
+.translator-container {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-top: 15px;
+    
+
+}
+
+.language{
+    color: #9F9DA3;
+    cursor:pointer;
+}
+
+.language:hover {
+    color: #57b846;
+}
+
+.selected {
+    color: #57b846;
+}
