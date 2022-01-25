@@ -1,0 +1,38 @@
+h1, p{
+    margin: 0;
+}
+.container-main-registration{
+    min-height: 100vh;
+    background: linear-gradient( -135deg, #c850c0, #4158d0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.registration-container{
+    background-color: #fff;
+    width: 960px;
+    border-radius: 10px;
+    padding: 50px;
+}
+
+.login-title{
+    font-family: 'Montserrat';
+    color: #2b2b2b;
+    font-size: 24px;
+}
+
+.input-registration-container{
+    display: flex;
+}
+
+.input-left{
+    flex: 1;
+    background-color: red;
+    padding-right: 7.5px;
+}
+
+.input-right{
+    flex: 1;
+    background-color: blue;
+    padding-left: 7.5px;
+}

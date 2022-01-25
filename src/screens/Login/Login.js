@@ -88,23 +88,24 @@ class Login extends Component {
     Login = () => {
         let existingUsers = JSON.parse(localStorage.getItem("arrayOfUsers"));
         console.log(existingUsers);
+        let navigateFlag = false;
         for (let x = 0; x < existingUsers.length; x++) {
             if (this.state.inputEmail === existingUsers[x].mail && this.state.inputPassword === existingUsers[x].password) {
-                this.setState(
-                    {
-                        navigateToHome: true,
-                    }
-
-                )
+                navigateFlag = true
             }
         }
-        if (!this.state.navigateToHome) {
+        this.setState(
+            {
+                navigateToHome: navigateFlag,
+            }
+        )
+        if (!navigateFlag) {
             alert('email o password errati');
         }
     }
     /*  */
     /* accesso screen ForgotPassword */
-    NavigateToForgotPassword = () => {
+    navigateToForgotPassword = () => {
         this.setState(
             {
                 navigateToForgotPassword: true,
@@ -113,7 +114,7 @@ class Login extends Component {
         )
     }
     /* accesso screen registation */
-    NavigateToRegistation = () => {
+    navigateToRegistation = () => {
         this.setState(
             {
                 navigateToRegistation: true,
@@ -180,11 +181,11 @@ class Login extends Component {
                             />
 
 
-                            <p className='login-text'>{this.props.t("LOGIN.forgotUser")}
-                                <span className='login-link'>Password?</span>
+                            <p className='login-text' onClick={this.navigateToForgotPassword}>{this.props.t("LOGIN.forgotUser")}
+                                <span className='login-link'> Password?</span>
                             </p>
                         </div>
-                        <p className='login-link login-footer' onClick={this.NavigateToRegistation}>
+                        <p className='login-link login-footer' onClick={this.navigateToRegistation}>
                             {this.props.t("LOGIN.createAccount")}
                             <i style={{ marginLeft: 15 }} className="fas fa-long-arrow-alt-right">
                             </i>
@@ -209,12 +210,6 @@ class Login extends Component {
                     this.state.navigateToForgotPassword === true &&
                     <Navigate to="/forgot-password" replace={true} />
                 }
-
-
-
-
-
-
             </div>
 
 
