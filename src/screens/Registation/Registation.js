@@ -11,8 +11,6 @@ class Registation extends Component {
         super(props)
     }
 
-
-
     render() {
         return (
             <div className="container-main-registration">
