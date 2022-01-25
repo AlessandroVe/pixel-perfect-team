@@ -1,14 +1,29 @@
 import "./home.css"
 import React, { Component } from 'react'
+import { useState, useEffect } from "react"
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+
+/* screens */
 import Login from '../Login/Login'
 
-export default class Home extends Component {
+const Home = () => {
+    const navigate = useNavigate();
+    const location = useLocation()
 
-    render() {
-        return (
-            <div className="home-container">
-                io sono home
-            </div>
-        )
-    }
+    console.log('location', location);
+
+    /* component did mount */
+    useEffect(() => {
+        if (location.state === null) {
+            navigate("/login")
+        }
+    }, [])
+    /*  */
+
+    return (
+        <div className="home-container">
+            io sono home
+        </div>
+    )
 }
+export default Home
