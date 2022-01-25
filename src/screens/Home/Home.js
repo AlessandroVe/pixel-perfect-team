@@ -1,14 +1,13 @@
 import "./home.css"
 import React, { Component } from 'react'
-import Login from "../components/classComponent/Login/Login"
-
+import Login from '../Login/Login'
 
 export default class Home extends Component {
 
-    render() {  
+    render() {
         return (
             <div className="home-container">
-                <Login />
+                io sono home
             </div>
         )
     }
