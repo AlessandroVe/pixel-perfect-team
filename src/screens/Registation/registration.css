@@ -26,13 +26,73 @@ h1, p{
 }
 
 .input-left{
+    display: flex;
     flex: 1;
-    background-color: red;
     padding-right: 7.5px;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
 .input-right{
+    display: flex;
     flex: 1;
-    background-color: blue;
     padding-left: 7.5px;
+    justify-content: space-between;
+    flex-direction: column;
+
+}
+
+.input-row{
+    margin: 5px 0;
+    font-family: 'Poppins', sans-serif;
+    color: #666666;
+}
+
+.checkbox-row{
+    margin: 5px 0;
+    font-family: 'Poppins', sans-serif;
+    color: #666666;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.checkbox-row > label{
+    flex-basis: 100%;
+    position: relative;
+    bottom: 10px
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    flex-basis: 100px;
+}
+
+.checkbox-gender {
+    height: 20px;
+    width: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    border:none;
+    border-radius: 20px;
+    outline: none;
+    background-color: #e6e6e6;
+    cursor: pointer;
+    position: relative;
+    margin-right: 5px;
+  }
+
+.checkbox-gender:checked:before {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    border-radius: 13px;
+    height: 13px;
+    width: 13px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #57b846;
 }
