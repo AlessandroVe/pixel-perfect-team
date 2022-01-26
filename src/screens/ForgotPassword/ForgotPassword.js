@@ -5,7 +5,6 @@ import Input from '../../components/classComponent/Input/Input'
 import Button from '../../components/funcComponent/Button/Button'
 
 import loginUtils from "../../utils/login"
-import cryptoUtils from "../../utils/encrypt" 
 
 class ForgotPassword extends Component {
 
