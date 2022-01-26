@@ -9,12 +9,13 @@ h1, p{
     align-items: center;
 }
 .registration-container{
+    position: relative;
     background-color: #fff;
     width: 960px;
     border-radius: 10px;
     padding: 50px;
 }
-.login-title{
+.registration-title{
     font-family: 'Montserrat';
     color: #2b2b2b;
     font-size: 24px;
@@ -60,7 +61,7 @@ h1, p{
 .checkbox-item {
     display: flex;
     align-items: center;
-    flex-basis: 100px;
+    flex-basis: 33%;
 }
 .checkbox-gender {
     height: 20px;
@@ -88,4 +89,42 @@ h1, p{
     left: 50%;
     transform: translate(-50%,-50%);
     background-color: #57b846;
+}
+
+.registration-link{
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: green;
+    border-radius: 20px;
+    padding: 5px 8px;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    display: inline-block;
+}
+
+
+.registration-link:hover{
+    color: #57b846;
+    transition: 0.3s;
+}  
+
+/* Tablet^ */
+@media only screen and (min-width: 600px) {
+    .registration-link{
+        display: inline-block;
+       position: unset;
+      background-color: #fff;
+    }
+    
+    .registration-link svg{
+        color: #a09e9e
+    }
+
+    
+    .registration-link svg:hover{
+        color: #57b846;
+        transition: 0.3s;
+    }   
 }

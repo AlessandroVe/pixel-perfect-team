@@ -15,7 +15,7 @@ import loginUtils from "../../utils/login"
 
 // i18n
 import { withTranslation } from 'react-i18next';
-
+import cryptoUtils from "../../utils/encrypt"
 
 class Login extends Component {
 
@@ -36,14 +36,6 @@ class Login extends Component {
     }
     /*momentario*/
     componentDidMount() {
-        let arr = [
-            {
-                mail: 'pippo@gmail.com',
-                password: '1234',
-            }
-        ]
-        localStorage.setItem("arrayOfUsers", JSON.stringify(arr))
-
     }
     /*  */
 
@@ -80,17 +72,22 @@ class Login extends Component {
         this.setState({ wrongEmail: wrongEmail, wrongPassword: wrongPsw })
 
         if (loginUtils.validateEmail(email) && loginUtils.validatePassword(psw)) {
-            alert("login accettabile")
-            this.Login()
+            this.doLogin()
         }
     }
     /* accesso alla home */
-    Login = () => {
-        let existingUsers = JSON.parse(localStorage.getItem("arrayOfUsers"));
-        console.log(existingUsers);
+    doLogin = () => {
+        let existingUsersEncrypted = JSON.parse(localStorage.getItem("arrayOfUsers"));
+
+
+        let usersDecripted = existingUsersEncrypted.map( (item) => {
+            return cryptoUtils.decryptData(item, "123")
+        })
+
         let navigateFlag = false;
-        for (let x = 0; x < existingUsers.length; x++) {
-            if (this.state.inputEmail === existingUsers[x].mail && this.state.inputPassword === existingUsers[x].password) {
+
+        for (let x = 0; x < usersDecripted.length; x++) {
+            if (this.state.inputEmail === usersDecripted[x].email && this.state.inputPassword === usersDecripted[x].password) {
                 navigateFlag = true
             }
         }
@@ -99,9 +96,6 @@ class Login extends Component {
                 navigateToHome: navigateFlag,
             }
         )
-        if (!navigateFlag) {
-            alert('email o password errati');
-        }
     }
     /*  */
     /* accesso screen ForgotPassword */

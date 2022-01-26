@@ -1,18 +1,26 @@
 import "./registration.css"
 import React, { Component } from 'react'
-import loginUtils from "../../utils/login"
+import { Navigate } from "react-router-dom";
 // funcComponents
 import Input from '../../components/classComponent/Input/Input';
 import CheckBox from "../../components/funcComponent/CheckBox/CheckBox";
 import Select from "../../components/funcComponent/Select/Select";
 import Button from "../../components/funcComponent/Button/Button";
 import { use } from "i18next";
+/*fontAwesomeIcon */
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
+/* utils*/
+import loginUtils from "../../utils/login"
+import cryptoUtils from "../../utils/encrypt" 
+
 
 class Registation extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            flagNavigateToLogin: false,
             genderSelector: [
                 {
                     label: "male",
@@ -46,10 +54,6 @@ class Registation extends Component {
             checkPassword: "",
             select: 'standard',
         }
-    }
-    /*component did Update */
-    componentDidUpdate() {
-        console.log(this.state)
     }
     /* methods Settings */
     selectGender = (label) => {
@@ -118,7 +122,7 @@ class Registation extends Component {
     verifyRegistration = () => {
         let firstName = true;
         let lastName = true;
-        let birthDate = true
+        let birthDate = true;
         let email = true;
         let phoneNumber = true;
         let password = true;
@@ -157,19 +161,67 @@ class Registation extends Component {
             }
         })
 
-
+        if (
+            firstName === false &&
+            lastName === false &&
+            birthDate === false &&
+            email === false &&
+            phoneNumber === false &&
+            password === false &&
+            checkPassword === false
+        ) {
+            this.registrate()
+        }
     }
 
-
-
-
     /*  */
+    registrate = () => {
+        let user = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            birthDate: this.state.birthDate,
+            genderSelected: this.state.genderSelected,
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber,
+            password: this.state.password,
+            checkPassword: this.state.checkPassword,
+            select: this.state.select,
+        }   
+        // get the encrypted array from localstorage
+        let encryptedArrayOfUsers = JSON.parse(localStorage.getItem("arrayOfUsers"))
+        if (encryptedArrayOfUsers === null) {
+            //If the storage is empty, encrypt a new array with the new user
+            localStorage.setItem("arrayOfUsers", JSON.stringify([cryptoUtils.encryptData(user)]))
+        } else {
+            //Else decript the array, push the user in the decrypted array, then encrypt it and put it in the local storage
+            let decryptedArray = encryptedArrayOfUsers.map( (item) => {
+                return cryptoUtils.decryptData(item, "123")
+            })
+            decryptedArray.push(user)
+            console.log(decryptedArray)
+            encryptedArrayOfUsers = decryptedArray.map( (item) => {
+                return cryptoUtils.encryptData(item)
+            })
+            localStorage.setItem("arrayOfUsers", JSON.stringify(encryptedArrayOfUsers))
+        }
+
+        this.navigateToLogin()
+    }
+
+    /* Naviage to Login */
+    navigateToLogin = () => {
+        this.setState(
+            {
+                flagNavigateToLogin: true
+            }
+        )
+    }
 
     render() {
         return (
             <div className="container-main-registration">
                 <div className="registration-container">
-                    <h1 className='login-title'>Registration Form</h1>
+                    <h1 className='registration-title'>Registration Form</h1>
                     <div className="input-registration-container">
                         <div className='input-left'>
                             <div className="input-row">
@@ -273,10 +325,16 @@ class Registation extends Component {
                     <div>
                         <Button
                             callback={this.verifyRegistration}
+                            label="Registrati"
                         />
                     </div>
-
+                    <span className="registration-link" onClick={this.navigateToLogin}><FontAwesomeIcon size="lg" icon={faLongArrowAltLeft}></FontAwesomeIcon></span>
                 </div>
+                {
+                    this.state.flagNavigateToLogin &&
+                    <Navigate to="/login" replace={true} />
+                }
+
             </div>
         )
 
