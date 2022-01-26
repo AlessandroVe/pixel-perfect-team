@@ -1,0 +1,31 @@
+.container-select{
+    width: 100%;
+    position: relative;
+}
+.container-select > svg{
+    position: absolute;
+    right: 25px;
+    top: 33px;
+}
+.business-account{
+    -moz-appearance: none; 
+	-webkit-appearance: none; 
+	appearance: none;
+
+    display: inline-block;
+    width: 100%;
+    padding: 4px 15px;
+    font-size: 15px;
+    border-width: 1px;
+    background-color: transparent;
+    font-family: Poppins;
+    font-style: regular;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 40px;
+    font-weight: bold;
+    background-color: #e6e6e6;
+
+}
