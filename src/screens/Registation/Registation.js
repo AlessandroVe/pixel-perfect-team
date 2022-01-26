@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 // funcComponents
 import Input from '../../components/classComponent/Input/Input';
 import CheckBox from "../../components/funcComponent/CheckBox/CheckBox";
+import Select from "../../components/funcComponent/Select/Select";
+import Button from "../../components/funcComponent/Button/Button";
 
 class Registation extends Component {
     constructor(props) {
@@ -28,15 +30,15 @@ class Registation extends Component {
     }
 
     selectGender = (label) => {
-        let array = this.state.genderSelector.map( (item)=> {
-            if(item.label === label) {
-                item.checked =  true
+        let array = this.state.genderSelector.map((item) => {
+            if (item.label === label) {
+                item.checked = true
             } else {
                 item.checked = false
             }
             return item
         })
-        this.setState( {
+        this.setState({
             genderSelector: array
         })
     }
@@ -67,6 +69,14 @@ class Registation extends Component {
                                     placeholder="Email"
                                 />
                             </div>
+                            <div className="input-row">
+                                <label>Password</label>
+                                <Input
+                                    placeholder="Password"
+                                    type="Password"
+                                />
+                            </div>
+
 
                         </div>
                         <div className='input-right'>
@@ -103,6 +113,7 @@ class Registation extends Component {
                                     />
                                 </div>
 
+
                             </div>
                             <div className="input-row">
                                 <label>Phone Number</label>
@@ -110,8 +121,22 @@ class Registation extends Component {
                                     placeholder="Phone Number"
                                 />
                             </div>
+                            <div className="input-row">
+                                <label>Confirm Password</label>
+                                <Input
+                                    placeholder="Confirm Password"
+                                    type="Password"
+                                />
+                            </div>
+                        </div>
+                        <div className='input-bottom'>
+                            <Select />
                         </div>
                     </div>
+                    <div>
+                        <Button />
+                    </div>
+
                 </div>
             </div>
         )
