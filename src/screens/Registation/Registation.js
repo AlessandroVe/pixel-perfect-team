@@ -1,6 +1,5 @@
 import "./registration.css"
 import React, { Component } from 'react'
-import loginUtils from "../../utils/login"
 import { Navigate } from "react-router-dom";
 // funcComponents
 import Input from '../../components/classComponent/Input/Input';
@@ -11,6 +10,10 @@ import { use } from "i18next";
 /*fontAwesomeIcon */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
+/* utils*/
+import loginUtils from "../../utils/login"
+import cryptoUtils from "../../utils/encrypt" 
+
 
 class Registation extends Component {
     constructor(props) {
@@ -171,7 +174,7 @@ class Registation extends Component {
         }
     }
 
-    /* metodo per la registrazione dell'utente */
+    /*  */
     registrate = () => {
         let user = {
             firstName: this.state.firstName,
@@ -183,19 +186,26 @@ class Registation extends Component {
             password: this.state.password,
             checkPassword: this.state.checkPassword,
             select: this.state.select,
-        }
-
-        let arrayOfUsers = JSON.parse(localStorage.getItem("arrayOfUsers"))
-
-        if (arrayOfUsers === null) {
-            localStorage.setItem("arrayOfUsers", JSON.stringify([user]))
+        }   
+        // get the encrypted array from localstorage
+        let encryptedArrayOfUsers = JSON.parse(localStorage.getItem("arrayOfUsers"))
+        if (encryptedArrayOfUsers === null) {
+            //If the storage is empty, encrypt a new array with the new user
+            localStorage.setItem("arrayOfUsers", JSON.stringify([cryptoUtils.encryptData(user)]))
         } else {
-            arrayOfUsers.push(user)
-            localStorage.setItem("arrayOfUsers", JSON.stringify(arrayOfUsers))
+            //Else decript the array, push the user in the decrypted array, then encrypt it and put it in the local storage
+            let decryptedArray = encryptedArrayOfUsers.map( (item) => {
+                return cryptoUtils.decryptData(item, "123")
+            })
+            decryptedArray.push(user)
+            console.log(decryptedArray)
+            encryptedArrayOfUsers = decryptedArray.map( (item) => {
+                return cryptoUtils.encryptData(item)
+            })
+            localStorage.setItem("arrayOfUsers", JSON.stringify(encryptedArrayOfUsers))
         }
 
         this.navigateToLogin()
-
     }
 
     /* Naviage to Login */
@@ -318,7 +328,7 @@ class Registation extends Component {
                             label="Registrati"
                         />
                     </div>
-                <span className="registration-link" onClick={this.navigateToLogin}><FontAwesomeIcon size="lg" icon={faLongArrowAltLeft}></FontAwesomeIcon></span>
+                    <span className="registration-link" onClick={this.navigateToLogin}><FontAwesomeIcon size="lg" icon={faLongArrowAltLeft}></FontAwesomeIcon></span>
                 </div>
                 {
                     this.state.flagNavigateToLogin &&

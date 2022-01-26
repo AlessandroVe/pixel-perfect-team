@@ -61,7 +61,7 @@ h1, p{
 .checkbox-item {
     display: flex;
     align-items: center;
-    flex-basis: 100px;
+    flex-basis: 33%;
 }
 .checkbox-gender {
     height: 20px;
