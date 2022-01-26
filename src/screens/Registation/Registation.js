@@ -221,7 +221,7 @@ class Registation extends Component {
         return (
             <div className="container-main-registration">
                 <div className="registration-container">
-                    <h1 className='login-title'>Registration Form</h1>
+                    <h1 className='registration-title'>Registration Form</h1>
                     <div className="input-registration-container">
                         <div className='input-left'>
                             <div className="input-row">
