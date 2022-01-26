@@ -1,18 +1,23 @@
 import "./registration.css"
 import React, { Component } from 'react'
 import loginUtils from "../../utils/login"
+import { Navigate } from "react-router-dom";
 // funcComponents
 import Input from '../../components/classComponent/Input/Input';
 import CheckBox from "../../components/funcComponent/CheckBox/CheckBox";
 import Select from "../../components/funcComponent/Select/Select";
 import Button from "../../components/funcComponent/Button/Button";
 import { use } from "i18next";
+/*fontAwesomeIcon */
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
 
 class Registation extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            flagNavigateToLogin: false,
             genderSelector: [
                 {
                     label: "male",
@@ -46,10 +51,6 @@ class Registation extends Component {
             checkPassword: "",
             select: 'standard',
         }
-    }
-    /*component did Update */
-    componentDidUpdate() {
-        console.log(this.state)
     }
     /* methods Settings */
     selectGender = (label) => {
@@ -118,7 +119,7 @@ class Registation extends Component {
     verifyRegistration = () => {
         let firstName = true;
         let lastName = true;
-        let birthDate = true
+        let birthDate = true;
         let email = true;
         let phoneNumber = true;
         let password = true;
@@ -157,13 +158,54 @@ class Registation extends Component {
             }
         })
 
+        if (
+            firstName === false &&
+            lastName === false &&
+            birthDate === false &&
+            email === false &&
+            phoneNumber === false &&
+            password === false &&
+            checkPassword === false
+        ) {
+            this.registrate()
+        }
+    }
+
+    /* metodo per la registrazione dell'utente */
+    registrate = () => {
+        let user = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            birthDate: this.state.birthDate,
+            genderSelected: this.state.genderSelected,
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber,
+            password: this.state.password,
+            checkPassword: this.state.checkPassword,
+            select: this.state.select,
+        }
+
+        let arrayOfUsers = JSON.parse(localStorage.getItem("arrayOfUsers"))
+
+        if (arrayOfUsers === null) {
+            localStorage.setItem("arrayOfUsers", JSON.stringify([user]))
+        } else {
+            arrayOfUsers.push(user)
+            localStorage.setItem("arrayOfUsers", JSON.stringify(arrayOfUsers))
+        }
+
+        this.navigateToLogin()
 
     }
 
-
-
-
-    /*  */
+    /* Naviage to Login */
+    navigateToLogin = () => {
+        this.setState(
+            {
+                flagNavigateToLogin: true
+            }
+        )
+    }
 
     render() {
         return (
@@ -273,10 +315,16 @@ class Registation extends Component {
                     <div>
                         <Button
                             callback={this.verifyRegistration}
+                            label="Registrati"
                         />
                     </div>
-
+                <span className="registration-link" onClick={this.navigateToLogin}><FontAwesomeIcon size="lg" icon={faLongArrowAltLeft}></FontAwesomeIcon></span>
                 </div>
+                {
+                    this.state.flagNavigateToLogin &&
+                    <Navigate to="/login" replace={true} />
+                }
+
             </div>
         )
 

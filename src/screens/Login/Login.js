@@ -36,14 +36,6 @@ class Login extends Component {
     }
     /*momentario*/
     componentDidMount() {
-        let arr = [
-            {
-                mail: 'pippo@gmail.com',
-                password: '1234',
-            }
-        ]
-        localStorage.setItem("arrayOfUsers", JSON.stringify(arr))
-
     }
     /*  */
 
@@ -87,10 +79,12 @@ class Login extends Component {
     /* accesso alla home */
     Login = () => {
         let existingUsers = JSON.parse(localStorage.getItem("arrayOfUsers"));
+        //Console log da cancellare
         console.log(existingUsers);
+
         let navigateFlag = false;
         for (let x = 0; x < existingUsers.length; x++) {
-            if (this.state.inputEmail === existingUsers[x].mail && this.state.inputPassword === existingUsers[x].password) {
+            if (this.state.inputEmail === existingUsers[x].email && this.state.inputPassword === existingUsers[x].password) {
                 navigateFlag = true
             }
         }
