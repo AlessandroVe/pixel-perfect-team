@@ -1,6 +1,8 @@
 h1, p{
     margin: 0;
 }
+
+
 .container-main-registration{
     min-height: 100vh;
     background: linear-gradient( -135deg, #c850c0, #4158d0);
