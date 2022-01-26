@@ -1,0 +1,16 @@
+.not-found-container{
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.not-found-alert{
+    font-weight: bold;
+    text-align: center;
+    width: 550px;
+
+}
+.not-found-alert img{
+    width: 100%;
+}
