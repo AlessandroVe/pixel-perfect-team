@@ -6,22 +6,29 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 const Select = (props) => {
 
 
+    const handlerSelect = (e) => {
+        let string = e.target.value;
+        if (props.callback !== undefined) {
+            props.callback(string)
+        }
+    }
+
     return (
         <div className='container-select'>
             <label for="cars">{props.label}</label>
             <br />
             <FontAwesomeIcon icon={faAngleDown}></FontAwesomeIcon>
-            <select className='business-account' name="cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+            <select onInput={handlerSelect} className='business-account' name="cars">
+                <option value="standard">standard</option>
+                <option value="premium">premium</option>
+                <option value="sponsor">sponsor</option>
             </select>
         </div>
     )
 }
 
 Select.propTypes = {
+    callback: PropTypes.func,
     label: PropTypes.string,
 }
 

@@ -13,12 +13,12 @@ export default class Input extends Component {
     }
 
     handleOnFocus = () => {
-        this.setState({ focussed: true})
+        this.setState({ focussed: true })
 
-    }   
+    }
 
     handleOnBlur = () => {
-        this.setState({ focussed: false})
+        this.setState({ focussed: false })
     }
 
 
@@ -28,14 +28,14 @@ export default class Input extends Component {
 
     render() {
         return (
-            <div 
+            <div
                 style={{ marginTop: this.props.marginTop }}
-                className={ this.state.focussed ? "input-container container-focus" : "input-container"}
+                className={this.state.focussed ? "input-container container-focus" : "input-container"}
             >
                 <div>
-                    <i className={ this.state.focussed ? `${this.props.ico} ico ico-focus` : `${this.props.ico} ico`}></i>
+                    <i className={this.state.focussed ? `${this.props.ico} ico ico-focus` : `${this.props.ico} ico`}></i>
                 </div>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                     <input
                         value={this.props.value}
                         placeholder={this.props.placeholder}
@@ -44,22 +44,22 @@ export default class Input extends Component {
                         className={this.state.focussed ? "inputStyle placeholder-focus" : "inputStyle"}
                         onChange={this.handleOnChange}
                         type={this.props.type}
-                    /> 
+                    />
                 </div>
                 <div>
-                    { this.props.isInvalid 
-                        ?   <i className="fas fa-exclamation-circle ico-alert"></i>
-                        :   null
+                    {this.props.isInvalid
+                        ? <i className="fas fa-exclamation-circle ico-alert"></i>
+                        : null
                     }
-                    
+
                 </div>
-            
-        
-        
-        
-        </div>
-             
-            
+
+
+
+
+            </div>
+
+
         )
     }
 }
@@ -71,6 +71,7 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
+    isInvalid: PropTypes.bool,
     callback: PropTypes.func,
     class: PropTypes.string
 }
