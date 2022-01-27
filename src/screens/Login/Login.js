@@ -105,7 +105,7 @@ class Login extends Component {
         this.setState(
             {
                 navigateToHome: navigateFlag,
-                errorFlag: errorFlag
+                errorFlag: errorFlag,
                 user: user,
             }
         )
