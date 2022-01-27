@@ -3,7 +3,25 @@
         "loginTitle": "Members Area",
         "forgotUser": "Forgot",
         "loginButtonText": "LOGIN",
-        "createAccount": "Create your account"
+        "createAccount": "Create your account",
+        "error": "Incorrect email or password"
+    },
+    "REGISTRATION":{
+        "title": "Registration Form",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "birthDay": "Birthday",
+        "gender": "Gender",
+        "phoneNumber": "Phone Number",
+        "confirmPassword": "Confirm Password",
+        "selectBusiness": "Choose your plan",
+        "error": "Email already used",
+        "signIn": "Sign In"
+    },
+    "FORGOTPASSWORD":{
+        "title":"Change your Password",
+        "confirmPassword":"Confirm Password",
+        "changePassword":"Change Password"
     }
     
 }

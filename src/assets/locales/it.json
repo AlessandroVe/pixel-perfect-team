@@ -1,9 +1,27 @@
 {
     "LOGIN":{
         "loginTitle": "Area Privata",
-        "forgotUser": "Hai dimenticato",
+        "forgotUser": "Ho dimenticato la",
         "loginButtonText": "Accedi",
-        "createAccount": "Crea il tuo account"
+        "createAccount": "Crea il tuo account",
+        "error": "Email o password errati"
+    },
+    "REGISTRATION":{
+        "title": "Pagina di registrazione",
+        "firstName": "Nome",
+        "lastName": "Cognome",
+        "birthDay": "Data di Nascita",
+        "gender": "Genere",
+        "phoneNumber": "Numero di Telefono",
+        "confirmPassword": "Conferma Password",
+        "selectBusiness": "Scegli il tuo piano",
+        "error":"Email già esistente",
+        "signIn": "Registrati"
+    },
+    "FORGOTPASSWORD":{
+        "title":"Modifica la tua password",
+        "confirmPassword":"Conferma Password",
+        "changePassword":"Modifica Password"
     }
     
 }

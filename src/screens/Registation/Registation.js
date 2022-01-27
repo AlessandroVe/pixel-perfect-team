@@ -12,14 +12,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
 /* utils*/
 import loginUtils from "../../utils/login"
-import cryptoUtils from "../../utils/encrypt" 
-
+import cryptoUtils from "../../utils/encrypt"
+// i18n
+import { withTranslation } from 'react-i18next';
 
 class Registation extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            errorFlag: false,
             flagNavigateToLogin: false,
             genderSelector: [
                 {
@@ -176,6 +178,7 @@ class Registation extends Component {
 
     /*  */
     registrate = () => {
+        let errorFlag = false
         let user = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -184,9 +187,8 @@ class Registation extends Component {
             email: this.state.email,
             phoneNumber: this.state.phoneNumber,
             password: this.state.password,
-            checkPassword: this.state.checkPassword,
             select: this.state.select,
-        }   
+        }
         // get the encrypted array from localstorage
         let encryptedArrayOfUsers = JSON.parse(localStorage.getItem("arrayOfUsers"))
         if (encryptedArrayOfUsers === null) {
@@ -194,18 +196,32 @@ class Registation extends Component {
             localStorage.setItem("arrayOfUsers", JSON.stringify([cryptoUtils.encryptData(user)]))
         } else {
             //Else decript the array, push the user in the decrypted array, then encrypt it and put it in the local storage
-            let decryptedArray = encryptedArrayOfUsers.map( (item) => {
+            let decryptedArray = encryptedArrayOfUsers.map((item) => {
                 return cryptoUtils.decryptData(item, "123")
             })
-            decryptedArray.push(user)
-            console.log(decryptedArray)
-            encryptedArrayOfUsers = decryptedArray.map( (item) => {
-                return cryptoUtils.encryptData(item)
+            // Check if email already exist
+        
+            decryptedArray.forEach((item) => {
+                if (item.email === user.email) {
+                    errorFlag = true
+                }
             })
-            localStorage.setItem("arrayOfUsers", JSON.stringify(encryptedArrayOfUsers))
-        }
+            if (!errorFlag) {
+                decryptedArray.push(user)
+                encryptedArrayOfUsers = decryptedArray.map((item) => {
+                    return cryptoUtils.encryptData(item)
+                })
+                localStorage.setItem("arrayOfUsers", JSON.stringify(encryptedArrayOfUsers))
+            } else {
+                this.setState({
+                    errorFlag: errorFlag
+                })
+            }
 
-        this.navigateToLogin()
+        }
+        if (!errorFlag) {
+            this.navigateToLogin()
+        }
     }
 
     /* Naviage to Login */
@@ -221,19 +237,19 @@ class Registation extends Component {
         return (
             <div className="container-main-registration">
                 <div className="registration-container">
-                    <h1 className='registration-title'>Registration Form</h1>
+                    <h1 className='registration-title'>{this.props.t("REGISTRATION.title")}</h1>
                     <div className="input-registration-container">
                         <div className='input-left'>
                             <div className="input-row">
-                                <label>First Name</label>
+                                <label>{this.props.t("REGISTRATION.firstName")}</label>
                                 <Input
-                                    placeholder="First Name"
+                                    placeholder={this.props.t("REGISTRATION.firstName")}
                                     callback={this.setFirstName}
                                     isInvalid={this.state.flagRequest.firstName}
                                 />
                             </div>
                             <div className="input-row">
-                                <label>Birthday</label>
+                                <label>{this.props.t("REGISTRATION.birthDay")}</label>
                                 <Input
                                     type="date"
                                     callback={this.setBirthday}
@@ -241,7 +257,13 @@ class Registation extends Component {
                                 />
                             </div>
                             <div className="input-row">
-                                <label>Email</label>
+                                <label>
+                                    Email
+                                    {
+                                        this.state.errorFlag &&
+                                        <span className="error-span">{this.props.t("REGISTRATION.error")}</span>
+                                    }
+                                </label>
                                 <Input
                                     placeholder="Email"
                                     callback={this.setEmail}
@@ -262,15 +284,15 @@ class Registation extends Component {
                         </div>
                         <div className='input-right'>
                             <div className="input-row">
-                                <label>Last Name</label>
+                                <label>{this.props.t("REGISTRATION.lastName")}</label>
                                 <Input
-                                    placeholder="Last Name"
+                                    placeholder={this.props.t("REGISTRATION.lastName")}
                                     callback={this.setLastName}
                                     isInvalid={this.state.flagRequest.lastName}
                                 />
                             </div>
                             <div className="checkbox-row">
-                                <label>Gender</label>
+                                <label>{this.props.t("REGISTRATION.gender")}</label>
                                 <div className="checkbox-item">
                                     <CheckBox
                                         className="checkbox-gender"
@@ -299,17 +321,17 @@ class Registation extends Component {
 
                             </div>
                             <div className="input-row">
-                                <label>Phone Number</label>
+                                <label>{this.props.t("REGISTRATION.phoneNumber")}</label>
                                 <Input
-                                    placeholder="Phone Number"
+                                    placeholder={this.props.t("REGISTRATION.phoneNumber")}
                                     callback={this.setPhoneNumber}
                                     isInvalid={this.state.flagRequest.phoneNumber}
                                 />
                             </div>
                             <div className="input-row">
-                                <label>Confirm Password</label>
+                                <label>{this.props.t("REGISTRATION.confirmPassword")}</label>
                                 <Input
-                                    placeholder="Confirm Password"
+                                    placeholder={this.props.t("REGISTRATION.confirmPassword")}
                                     type="Password"
                                     callback={this.setCheckPassword}
                                     isInvalid={this.state.flagRequest.checkPassword}
@@ -319,13 +341,14 @@ class Registation extends Component {
                         <div className='input-bottom'>
                             <Select
                                 callback={this.setSelect}
+                                label={this.props.t("REGISTRATION.selectBusiness")}
                             />
                         </div>
                     </div>
                     <div>
                         <Button
                             callback={this.verifyRegistration}
-                            label="Registrati"
+                            label={this.props.t("REGISTRATION.signIn")}
                         />
                     </div>
                     <span className="registration-link" onClick={this.navigateToLogin}><FontAwesomeIcon size="lg" icon={faLongArrowAltLeft}></FontAwesomeIcon></span>
@@ -341,4 +364,4 @@ class Registation extends Component {
     }
 
 }
-export default Registation;
+export default  withTranslation()(Registation);
