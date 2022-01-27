@@ -35,7 +35,9 @@ class Login extends Component {
             mouseY: 0,
             inputEmail: "",
             inputPassword: "",
-
+            user: null,
+            wrongEmail: false,
+            wrongPassword: false
         }
     }
     /*momentario*/
@@ -84,23 +86,27 @@ class Login extends Component {
         let existingUsersEncrypted = JSON.parse(localStorage.getItem("arrayOfUsers"));
 
 
-        let usersDecripted = existingUsersEncrypted.map( (item) => {
+        let usersDecripted = existingUsersEncrypted.map((item) => {
             return cryptoUtils.decryptData(item, "123")
         })
 
         let navigateFlag = false;
         let errorFlag = true;
-
+      
+        let user = null
         for (let x = 0; x < usersDecripted.length; x++) {
             if (this.state.inputEmail === usersDecripted[x].email && this.state.inputPassword === usersDecripted[x].password) {
                 navigateFlag = true
+                user = usersDecripted[x];
                 errorFlag = false
+
             }
         }
         this.setState(
             {
                 navigateToHome: navigateFlag,
                 errorFlag: errorFlag
+                user: user,
             }
         )
     }
@@ -203,7 +209,7 @@ class Login extends Component {
                     <Navigate to="/" replace={true}
                         state={
                             {
-                                mail: this.state.inputEmail,
+                                user: this.state.user,
                             }
                         }
                     />

@@ -8,9 +8,7 @@ import Login from '../Login/Login'
 
 const Home = () => {
     const navigate = useNavigate();
-    const location = useLocation()
-
-    console.log('location', location);
+    const location = useLocation();
 
     /* component did mount */
     useEffect(() => {
