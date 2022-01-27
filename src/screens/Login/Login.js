@@ -12,10 +12,12 @@ import Translator from "../../components/funcComponent/Translator/Translator"
 
 /* utils */
 import loginUtils from "../../utils/login"
+import cryptoUtils from "../../utils/encrypt"
 
 // i18n
 import { withTranslation } from 'react-i18next';
-import cryptoUtils from "../../utils/encrypt"
+
+
 
 class Login extends Component {
 
@@ -26,6 +28,9 @@ class Login extends Component {
             navigateToForgotPassword: false,
             navigateToHome: false,
             navigateToRegistation: false,
+            errorFlag: false,
+            wrongEmail: false,
+            wrongPassword: false,
             mouseX: 0,
             mouseY: 0,
             inputEmail: "",
@@ -86,16 +91,21 @@ class Login extends Component {
         })
 
         let navigateFlag = false;
+        let errorFlag = true;
+      
         let user = null
         for (let x = 0; x < usersDecripted.length; x++) {
             if (this.state.inputEmail === usersDecripted[x].email && this.state.inputPassword === usersDecripted[x].password) {
                 navigateFlag = true
                 user = usersDecripted[x];
+                errorFlag = false
+
             }
         }
         this.setState(
             {
                 navigateToHome: navigateFlag,
+                errorFlag: errorFlag
                 user: user,
             }
         )
@@ -152,6 +162,11 @@ class Login extends Component {
                     <div className="login-right">
                         <div className='login-right-container'>
                             <h1 className='login-title'>{this.props.t("LOGIN.loginTitle")}</h1>
+                            {
+                                this.state.errorFlag &&
+                                <span className="error-span">{this.props.t("LOGIN.error")}</span>
+                            }
+                            
 
                             <Input
                                 placeholder="Email"

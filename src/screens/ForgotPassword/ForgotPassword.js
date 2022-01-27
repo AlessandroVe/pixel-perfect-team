@@ -1,12 +1,18 @@
-import React, { Component } from 'react'
 import "./forgotPassword.css"
+import React, { Component } from 'react'
+import { Navigate } from "react-router-dom";
 
 import Input from '../../components/classComponent/Input/Input'
 import Button from '../../components/funcComponent/Button/Button'
 
 import loginUtils from "../../utils/login"
+import cryptoUtils from "../../utils/encrypt"
 
+/*fontAwesomeIcon */
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
 
+import { withTranslation } from 'react-i18next';
 
 class ForgotPassword extends Component {
 
@@ -17,16 +23,13 @@ class ForgotPassword extends Component {
             email: '',
             password: '',
             checkPassword: '',
+            navigateToLogin : false,
             flagRequest: {
                 email: false,
                 password: false,
-                checkPassword: false  
+                checkPassword: false
             }
         }
-    }
-
-    componentDidUpdate() {
-        console.log(this.state)
     }
 
     setEmail = (e) => {
@@ -82,14 +85,42 @@ class ForgotPassword extends Component {
 
     //Function that change your password
     changePassword = () => {
+        let existingUsersEncrypted = JSON.parse(localStorage.getItem("arrayOfUsers"));
 
+        let usersDecripted = existingUsersEncrypted.map((item) => {
+            return cryptoUtils.decryptData(item, "123")
+        })
+
+        let userIndex = null
+
+        for (let x = 0; x < usersDecripted.length; x++) {
+            if (this.state.email === usersDecripted[x].email) {
+                userIndex = x
+            }
+        }
+
+        usersDecripted[userIndex].password = this.state.password
+
+        existingUsersEncrypted = usersDecripted.map((item) => {
+            return cryptoUtils.encryptData(item)
+        })
+
+        localStorage.setItem("arrayOfUsers", JSON.stringify(existingUsersEncrypted))
+
+        this.navigateToLogin()
+    }
+
+    navigateToLogin = () => {
+        this.setState({
+            navigateToLogin : true
+        })
     }
 
     render() {
         return (
             <div className='container-main-forgot'>
                 <div className='forgot-container'>
-                    <h1 className='forgot-title'>Change Password</h1>
+                    <h1 className='forgot-title'>{this.props.t("FORGOTPASSWORD.title")}</h1>
                     <div className="input-forgot-container">
                         <div className="input-row">
                             <label>Email</label>
@@ -109,9 +140,9 @@ class ForgotPassword extends Component {
                             />
                         </div>
                         <div className="input-row">
-                            <label>Confirm Password</label>
+                            <label>{this.props.t("FORGOTPASSWORD.confirmPassword")}</label>
                             <Input
-                                placeholder="confirm password"
+                                placeholder={this.props.t("FORGOTPASSWORD.confirmPassword")}
                                 type="password"
                                 callback={this.setCheckPassword}
                                 isInvalid={this.state.flagRequest.checkPassword}
@@ -119,10 +150,15 @@ class ForgotPassword extends Component {
                         </div>
                         <Button
                             callback={this.verifyChangePassword}
-                            label="Cambia Password"
+                            label={this.props.t("FORGOTPASSWORD.changePassword")}
                         />
                     </div>
+                    <span className="forgot-link" onClick={this.navigateToLogin}><FontAwesomeIcon size="lg" icon={faLongArrowAltLeft}></FontAwesomeIcon></span>
                 </div>
+                {
+                    this.state.navigateToLogin && 
+                    <Navigate to="/login" replace={true} />
+                }
 
             </div>
         )
@@ -130,4 +166,4 @@ class ForgotPassword extends Component {
     }
 
 }
-export default ForgotPassword;
+export default withTranslation()(ForgotPassword);
